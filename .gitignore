@@ -1,0 +1,5 @@
+env_setup.sh
+*.dts
+*.dump
+*.elf
+*.o
