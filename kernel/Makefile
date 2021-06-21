@@ -1,7 +1,7 @@
 TARGET=riscv64-unknown-elf-
 AS=$(RV_TOOLCHAIN_DIR)/$(TARGET)as
 CC=$(RV_TOOLCHAIN_DIR)/$(TARGET)gcc
-CFLAGS=-ffreestanding -O0 -Wall -Wextra -g    # Remove -g if not debug
+CFLAGS=-g -Wall -Wextra -O3 -ffreestanding
 
 OBJ:=boot.o main.o uart.o
 

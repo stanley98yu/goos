@@ -18,6 +18,7 @@ Dependencies
 
 - GCC 10.2.0
 - GNU Binutils 2.36.1
+- GNU gdb 10.1
 - GNU Make 4.2.1
 - QEMU 4.2.1
 
@@ -27,5 +28,25 @@ Linux Reference
 See [this][deb-riscv-vm] for instructions on how to create a Debian disk image
 for RISC-V and run it on QEMU using OpenSBI and U-Boot.
 
+Resources
+---------
+
+The following were very useful resources and references:
+
+Unofficial:
+
+- [SOS][sos]: Targets ARMv7-A but was a useful reference when starting for basic
+organization and build processes.
+- [Stephen Marz's Blog][stephen-marz]: Lots of good explanations about RISC-V
+arch/asm, even though I'm not using Rust.
+
+Official:
+
+- Linux
+- [RISC-V Specifications][riscv-specs]
+
 [deb-riscv-vm]: https://wiki.debian.org/RISC-V#Setting_up_a_riscv64_virtual_machine
 [riscv-gnu-toolchain]: https://github.com/riscv/riscv-gnu-toolchain
+[riscv-specs]: https://riscv.org/technical/specifications/
+[sos]: https://github.com/brenns10/sos]
+[stephen-marz]: https://osblog.stephenmarz.com/index.html]

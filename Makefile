@@ -3,11 +3,12 @@ AS=$(RV_TOOLCHAIN_DIR)/$(TARGET)as
 CC=$(RV_TOOLCHAIN_DIR)/$(TARGET)gcc
 OBJDUMP=$(RV_TOOLCHAIN_DIR)/$(TARGET)objdump
 
-CFLAGS=-ffreestanding -O0 -Wall -Wextra -g    # Remove -g if not debug
-LDFLAGS=-ffreestanding -O0 -nostdlib -lgcc
+CFLAGS=-g -Wall -Wextra -O3 -ffreestanding
+LDFLAGS=-nostdlib -lgcc -O3 -ffreestanding
 
 QEMU=qemu-system-riscv64
-QEMU_CMD=$(QEMU) -machine virt -m 1G -nographic
+QEMU_CMD=$(QEMU) -machine virt -m 1G -nographic \
+	 -bios none
 QEMU_DBGFLAGS=-gdb tcp::1234 -S
 
 KERN_DIR=kernel
