@@ -1,4 +1,5 @@
-void uart_init();
+void uart_init(void);
 void uart_putc(char c);
 void uart_puts(char *s);
-int uart_getc();
+void interp(char c);
+int uart_getc(void);

@@ -3,14 +3,18 @@ AS=$(RV_TOOLCHAIN_DIR)/$(TARGET)as
 CC=$(RV_TOOLCHAIN_DIR)/$(TARGET)gcc
 CFLAGS=-g -Wall -Wextra -O3 -ffreestanding
 
-OBJ:=boot.o main.o uart.o
+OBJ:=boot.o irq.o main.o uart.o
 
 .PHONY: all
 all: $(OBJ)
 
-main.o: uart.h
+boot.o:
 
-uart.o: uart.h
+irq.o: irq.h mmio.h uart.h
+
+main.o: irq.h uart.h
+
+uart.o: mmio.h uart.h
 
 .PHONY: clean
 clean:

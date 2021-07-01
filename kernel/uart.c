@@ -1,17 +1,17 @@
-/* NS16550A UART driver */
+/* 16550a UART driver */
+#include <stdint.h>
+#include "mmio.h"
 #include "uart.h"
 
-#define UART_BASE_ADDR    0x10000000
-
-char *base = (char *)UART_BASE_ADDR;
-char *ier = (char *)(UART_BASE_ADDR+1);    // Interrupt enable register
-char *fcr = (char *)(UART_BASE_ADDR+2);    // FIFO control register
-char *lcr = (char *)(UART_BASE_ADDR+3);    // Line control register
-char *lsr = (char *)(UART_BASE_ADDR+5);    // Line status register
+volatile uint8_t *base = (uint8_t *)UART_BASE_ADDR;
+volatile uint8_t *ier = (uint8_t *)(UART_BASE_ADDR+1); // Interrupt enable reg
+volatile uint8_t *fcr = (uint8_t *)(UART_BASE_ADDR+2); // FIFO control reg
+volatile uint8_t *lcr = (uint8_t *)(UART_BASE_ADDR+3); // Line control reg
+volatile uint8_t *lsr = (uint8_t *)(UART_BASE_ADDR+5); // Line status reg
 
 void uart_putc(char c)
 {
-	*base = c;
+	*base = (uint8_t)c;
 }
 
 void uart_puts(char *s)
@@ -21,19 +21,39 @@ void uart_puts(char *s)
 	}
 }
 
-int uart_getc()
+int uart_getc(void)
 {
 	if (*lsr & 1) {
-		return *base;
+		return (int)*base;
 	}
 	return -1;
 }
 
+void interp(char c)
+{
+	switch (c) {
+		case 'w':
+			uart_puts("Up!\n");
+			break;
+		case 'a':
+			uart_puts("Left!\n");
+			break;
+		case 's':
+			uart_puts("Down!\n");
+			break;
+		case 'd':
+			uart_puts("Right!\n");
+			break;
+		default:
+			break;
+	}
+}
+
 /* Initialization steps necessary for enabling interrupts from the UART */
-void uart_init()
+void uart_init(void)
 {
 	// Set word length to 8 bits, enable FIFO, and enable receiver interrupts
 	*lcr |= 3;
 	*fcr |= 1;
-	*ier |= 1;;
+	*ier |= 1;
 }

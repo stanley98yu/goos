@@ -29,9 +29,17 @@ clear_bss_done:
 	la sp, __stack_bottom
 	add s0, sp, zero
 
+	# Set machine trap vector
+	la t0, int_vec
+	csrw mtvec, t0
+
 	jal main
 	ebreak
 	j wait_for_cpu
+
+int_vec:
+	jal handle_interrupt
+	mret
 
 secondary_start:
 	# Set trap vector to spin forever for debugging
