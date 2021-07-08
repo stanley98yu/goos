@@ -9,7 +9,7 @@ Steps
 1. Set up a GCC cross-compiler for RISC-V ELF/Newlib. See
 [this][riscv-gnu-toolchain] for instructions.
 
-2. Set your environment prefix to point to your cross-compiler.
+2. Set your config variables for the RISC-V toolchain and root directories.
 
 3. Run `make`.
 

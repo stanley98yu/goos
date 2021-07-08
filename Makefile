@@ -1,33 +1,37 @@
-TARGET=riscv64-unknown-elf-
-AS=$(RV_TOOLCHAIN_DIR)/$(TARGET)as
-CC=$(RV_TOOLCHAIN_DIR)/$(TARGET)gcc
-OBJDUMP=$(RV_TOOLCHAIN_DIR)/$(TARGET)objdump
+TARGET = riscv64-unknown-elf-
+AS = $(RV_TOOLCHAIN_DIR)/$(TARGET)as
+CC = $(RV_TOOLCHAIN_DIR)/$(TARGET)gcc
+OBJDUMP = $(RV_TOOLCHAIN_DIR)/$(TARGET)objdump
 
-CFLAGS=-g -Wall -Wextra -O3 -ffreestanding
-LDFLAGS=-nostdlib -lgcc -O3 -ffreestanding
+CFLAGS = -g -Wall -Wextra -O3 -ffreestanding -isysroot $(ROOT_DIR) -iquote =/lib 
+LDFLAGS = -nostdlib -lgcc -O3 -ffreestanding
 
-QEMU=qemu-system-riscv64
-QEMU_CMD=$(QEMU) -machine virt -m 1G -nographic \
-	 -bios none
-QEMU_DBGFLAGS=-gdb tcp::1234 -S
+LDLIBS =
 
-KERN_DIR=kernel
-KERN_S:=$(wildcard $(KERN_DIR)/*.s)
-KERN_C:=$(wildcard $(KERN_DIR)/*.c)
-KERN_OBJ:=$(KERN_C:%.c=%.o) $(KERN_S:%.s=%.o)
+QEMU = qemu-system-riscv64
+QEMU_CMD = $(QEMU) -machine virt -m 1G -nographic \
+	   -bios none
+QEMU_DBGFLAGS = -gdb tcp::1234 -S
+
+KERN_S := $(wildcard kernel/*.s)
+KERN_C := $(wildcard kernel/*.c)
+KERN_OBJ := $(KERN_C:%.c=%.o) $(KERN_S:%.s=%.o)
+LIB_C := $(wildcard lib/*.c)
+LIB_OBJ := $(LIB_C:%.c=%.o)
 
 .PHONY: all 
-all: $(KERN_DIR) goos.elf goos.dump
+all: __sub-make goos.elf goos.dump
 
-goos.elf: $(KERN_OBJ)
-	$(CC) -T $(KERN_DIR)/linker.ld -o $@ $^ $(LDFLAGS)
+goos.elf: $(KERN_OBJ) $(LIB_OBJ)
+	$(CC) -T kernel/linker.ld -o $@ $^ $(LDFLAGS)
 
 goos.dump: goos.elf
 	$(OBJDUMP) -d $< > $@
 
-.PHONY: $(KERN_DIR)
-$(KERN_DIR):
-	$(MAKE) -C $@
+.PHONY: __sub-make
+__sub-make:
+	$(MAKE) -C lib
+	$(MAKE) -C kernel
 
 .PHONY: run
 run: goos.elf
@@ -46,5 +50,6 @@ gdb: goos.elf
 
 .PHONY: clean
 clean:
-	rm -f $(KERN_DIR)/*.o
+	rm -f lib/*.o
+	rm -f kernel/*.o
 	rm -f *.elf *.dump

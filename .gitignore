@@ -1,4 +1,4 @@
-env_setup.sh
+config.sh
 *.dts
 *.dump
 *.elf
