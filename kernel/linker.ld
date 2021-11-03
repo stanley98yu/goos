@@ -35,4 +35,5 @@ SECTIONS
 	/* 512 KiB stack */
 	PROVIDE(__stack_bottom = ORIGIN(ram) + LENGTH(ram));
 	PROVIDE(__stack_top = __stack_bottom - 0x80000);
+	PROVIDE(__heap_size = __stack_top - __heap_bottom);
 }

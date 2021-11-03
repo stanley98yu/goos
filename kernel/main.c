@@ -1,8 +1,9 @@
 #include "format.h"
 #include "irq.h"
+#include "mm.h"
 #include "uart.h"
 
-/* Temporary print function for registers */
+/* Print function for debugging registers */
 void print_reg(char *name, int reg)
 {
 	char buf[256];

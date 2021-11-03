@@ -1,7 +1,8 @@
 Gamers Only OS (GOOS)
 =====================
 
-An operating system that targets RISC-V architecture.
+An operating system that targets [RISC-V][riscv], specifically QEMU's `virt`
+board.
 
 Steps
 -----
@@ -9,15 +10,13 @@ Steps
 1. Set up a GCC cross-compiler for RISC-V ELF/Newlib. See
 [this][riscv-gnu-toolchain] for instructions.
 
-2. Set your config variables for the RISC-V toolchain and root directories.
-
-3. Run `make`.
+2. Run `make`.
 
 Dependencies
 ------------
 
-- GCC 10.2.0
-- GNU Binutils 2.36.1
+- GCC 11.1.0
+- GNU Binutils 2.37
 - GNU gdb 10.1
 - GNU Make 4.2.1
 - QEMU 4.2.1
@@ -53,6 +52,7 @@ implementing interrupt handlers.
 [deb-riscv-vm]: https://wiki.debian.org/RISC-V#Setting_up_a_riscv64_virtual_machine
 [os-dev-wiki]: https://wiki.osdev.org/Main_Page
 [qemu-mirror]: https://github.com/qemu/qemu
+[riscv]: https://riscv.org/
 [riscv-gnu-toolchain]: https://github.com/riscv/riscv-gnu-toolchain
 [riscv-specs]: https://riscv.org/technical/specifications/
 [sifive-fu540-manual]: https://sifive.cdn.prismic.io/sifive%2F834354f0-08e6-423c-bf1f-0cb58ef14061_fu540-c000-v1.0.pdf

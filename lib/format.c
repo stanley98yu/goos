@@ -1,7 +1,13 @@
 #include "format.h"
 #include "string.h"
 
-/* Converts an integer to a null-terminated string using the specified base. */
+/**
+ * Converts an integer to a null-terminated string using the specified base.
+ *
+ * @n: integer to convert
+ * @s: buffer array for storing the string
+ * @base: numerical base for conversion
+ */
 void itoa(int n, char s[], int base)
 {
 	int sign, mod, i = 0;

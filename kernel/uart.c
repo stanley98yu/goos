@@ -1,6 +1,6 @@
 /* 16550a UART driver */
 #include <stdint.h>
-#include "mmio.h"
+#include "qemu.h"
 #include "uart.h"
 
 volatile uint8_t *base = (uint8_t *)UART_BASE_ADDR;
@@ -52,7 +52,7 @@ void interp(char c)
 /* Initialization steps necessary for enabling interrupts from the UART */
 void uart_init(void)
 {
-	// Set word length to 8 bits, enable FIFO, and enable receiver interrupts
+	/* Set word length to 8 bits, enable FIFO, and enable receiver interrupts */
 	*lcr |= 3;
 	*fcr |= 1;
 	*ier |= 1;
